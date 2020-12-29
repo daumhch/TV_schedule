@@ -1,0 +1,39 @@
+import time
+import requests
+from bs4 import BeautifulSoup
+
+
+html = requests.get("http://ocn.tving.com/ocn/schedule")
+soup = BeautifulSoup(html.text, 'html5lib') 
+
+temp_list1 = []
+temp_list2 = []
+for i in soup.select('td.programInfo em'):
+    temp_list1.append(i.text.replace('\t','').replace(' ','').replace('\n',''))
+print(temp_list1)
+print( len(temp_list1) )
+
+# td 태크 밑에 programInfo 태크 밑에 종속된 div 밑에 class 이름이 program
+for i in soup.select('td.programInfo > div .program'): 
+    temp_list2.append(i.text.replace('\t','').replace(' ','').replace('\n',''))
+print(temp_list2)
+print( len(temp_list2) )
+
+from datetime import datetime, timedelta
+now_time = datetime.now() # -timedelta(hours=2)
+now_time = now_time.strftime("%H:%M")
+print( now_time )
+
+
+search_length = [i for i, value in enumerate(temp_list1) if value >= now_time]
+print(search_length[0]-1)
+
+start_index = search_length[0]-1
+temp_list1 = temp_list1[start_index:start_index+4]
+temp_list2 = temp_list2[start_index:start_index+4]
+
+print(temp_list1)
+print(temp_list2)
+
+
+
