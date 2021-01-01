@@ -6,14 +6,14 @@ from bs4 import BeautifulSoup
 
 def read_ocn():
     now_time = datetime.now().strftime("%H:%M")
-    # print('now_time:', now_time)
+    print('now_time:', now_time)
 
     now_day = datetime.now().strftime("%Y%m%d")
-    # print('now_day:', now_day)
+    print('now_day:', now_day)
 
     tomo_day = datetime.now()+timedelta(days=1)
     tomo_day = tomo_day.strftime("%Y%m%d")
-    # print('tomo_day:', tomo_day)
+    print('tomo_day:', tomo_day)
 
     start1 = time.time()
 
@@ -28,7 +28,7 @@ def read_ocn():
         airTime_ocn_list.append(i.text.replace('\t','').replace(' ','').replace('\n',''))
     for i in tomo_ocn_soup.select('td.programInfo em'):
         airTime_ocn_list.append(i.text.replace('\t','').replace(' ','').replace('\n',''))
-    # print(airTime_ocn_list)
+    print(airTime_ocn_list)
 
     program_ocn_list = []
     # td 태크 밑에 programInfo 태크 밑에 종속된 div 밑에 class 이름이 program
@@ -36,7 +36,7 @@ def read_ocn():
         program_ocn_list.append(i.text.replace('\t','').replace(' ','').replace('\n',''))
     for i in tomo_ocn_soup.select('td.programInfo > div .program'): 
         program_ocn_list.append(i.text.replace('\t','').replace(' ','').replace('\n',''))
-    # print(program_ocn_list)
+    print(program_ocn_list)
 
 
     start_index = [i for i, value in enumerate(airTime_ocn_list) if value >= now_time][0]-1
