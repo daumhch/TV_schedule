@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
+    <meta http-equiv="refresh" content="60" > <!-- 60초마다 새로고침 -->
+    <script>
+    function init(){
+        console.log('body onload:',(new Date()))
+    }
+    </script>
+</head>
+<body onload="init()">
     <h1>메인 화면</h1>
+    {{data}}
 </body>
 </html>
