@@ -15,7 +15,8 @@ def cut_HTML(save, soup, now_day, tomo_day, option):
     if option == 'TIME':
         temp = soup.select('td.programInfo em')
         for i, value in enumerate(temp):
-            j = value.text.replace('\t', '').replace(' ', '').replace('\n', '')
+            j = value.text.replace('\t', '').replace(' ', '')
+            j = j.replace('\n', '').replace('\r', '')
             if i > len(temp)/2 and j.startswith('0', 0, 2):  # 내일
                 save.append(tomo_day+' '+j)
             else:  # 오늘
@@ -23,7 +24,8 @@ def cut_HTML(save, soup, now_day, tomo_day, option):
     elif option == 'PROGRAM':
         temp = soup.select('td.programInfo > div .program')
         for i, value in enumerate(temp):
-            j = value.text.replace('\t', '').replace(' ', '').replace('\n', '')
+            j = value.text.replace('\t', '').replace(' ', '')
+            j = j.replace('\n', '').replace('\r', '')
             save.append(j)
     return save
 
@@ -55,14 +57,13 @@ def read_schedule(path):
     temp2 = temp2[start_index:start_index+4]
 
     temp = np.array([temp1, temp2]).T
-    temp = pd.DataFrame(temp)
-    return temp
-
+    temp = pd.DataFrame(temp, columns=['OnTime', 'Program'])
+    return temp.to_html(index=False)
 
 if __name__ == '__main__':
     OCN_PATH = "http://ocn.tving.com/ocn/schedule?startDate="
     ocn_list = read_schedule(OCN_PATH)
-    print(ocn_list.to_html())
+    print(ocn_list)
 
     # THRILLS_PATH = "http://ocnthrills.tving.com/ocnthrills/schedule?startDate="
     # ocnT_list = read_schedule(THRILLS_PATH)

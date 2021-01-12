@@ -4,12 +4,18 @@
     <meta http-equiv="refresh" content="60" > <!-- 60초마다 새로고침 -->
     <script>
     function init(){
-        console.log('body onload:',(new Date()))
+        console.log('body onload:',(new Date()));
+
+        temp = document.getElementById('ocn')
+        console.log(temp)
     }
     </script>
 </head>
 <body onload="init()">
+    {{data2}}
     <h1>메인 화면</h1>
-    {{data}}
+    <div id="ocn">
+    {{data|safe}}
+    <div>
 </body>
 </html>
